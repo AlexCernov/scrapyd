@@ -1,8 +1,9 @@
 import os
 from datetime import datetime
+
 from zope.interface import implementer
-from .interfaces import IJobStorage
-from .sqlite import SqliteFinishedJobs
+from scrapyd.interfaces import IJobStorage
+from scrapyd.sqlite import SqliteFinishedJobs
 from scrapyd.orchestrator_client.api_interfaces.JobApi import JobApi
 
 class Job(object):

@@ -1,5 +1,6 @@
 from zope.interface import Interface
 
+
 class IEggStorage(Interface):
     """A component that handles storing and retrieving eggs"""
 
@@ -110,6 +111,7 @@ class IEnvironment(Interface):
         `message` is the message received from the IPoller.next() method
         `slot` is the Launcher slot where the process will be running.
         """
+
 
 class IJobStorage(Interface):
     """A component that handles storing and retrieving finished jobs. """

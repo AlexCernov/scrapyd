@@ -1,12 +1,12 @@
-from datetime import datetime, timedelta
 import socket
+from datetime import datetime, timedelta
 
 from scrapy.utils.misc import load_object
 from six.moves.urllib.parse import urlparse
-from twisted.web import resource, static
 from twisted.application.service import IServiceCollection
+from twisted.web import resource, static
 
-from .interfaces import IPoller, IEggStorage, ISpiderScheduler
+from scrapyd.interfaces import IEggStorage, IPoller, ISpiderScheduler
 
 
 class Root(resource.Resource):
@@ -28,8 +28,8 @@ class Root(resource.Resource):
         self.putChild(b'jobs', Jobs(self, local_items))
         services = config.items('services', ())
         for servName, servClsName in services:
-          servCls = load_object(servClsName)
-          self.putChild(servName.encode('utf-8'), servCls(self))
+            servCls = load_object(servClsName)
+            self.putChild(servName.encode('utf-8'), servCls(self))
         self.update_projects()
 
     def update_projects(self):
@@ -89,7 +89,8 @@ monitoring)</p>
 <p>Example using <a href="http://curl.haxx.se/">curl</a>:</p>
 <p><code>curl http://localhost:6800/schedule.json -d project=default -d spider=somespider</code></p>
 
-<p>For more information about the API, see the <a href="http://scrapyd.readthedocs.org/en/latest/">Scrapyd documentation</a></p>
+<p>For more information about the API, see the
+<a href="http://scrapyd.readthedocs.org/en/latest/">Scrapyd documentation</a></p>
 </body>
 </html>
 """ % vars

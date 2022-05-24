@@ -1,7 +1,6 @@
-from configparser import ConfigParser, NoSectionError, NoOptionError
 import glob
 import io
-from pkgutil import get_data
+from configparser import ConfigParser, NoOptionError, NoSectionError
 from os.path import expanduser
 from twisted.python import log
 import sys

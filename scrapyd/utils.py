@@ -1,22 +1,28 @@
 import sys
 import os
 
-from .orchestrator_client.api_interfaces.UserApi import UserApi
-from .orchestrator_client.api_interfaces.ProjectApi import ProjectApi
-from .orchestrator_client.api_interfaces.SpiderApi import SpiderApi
-from .orchestrator_client.api_interfaces.ScrapydInstanceApi import ScrapydInstanceApi
+from scrapyd.orchestrator_client.api_interfaces.UserApi import UserApi
+from scrapyd.orchestrator_client.api_interfaces.ProjectApi import ProjectApi
+from scrapyd.orchestrator_client.api_interfaces.SpiderApi import SpiderApi
+from scrapyd.orchestrator_client.api_interfaces.ScrapydInstanceApi import ScrapydInstanceApi
 from scrapyd.orchestrator_client.exception.OrchestratorExceptionBase import OrchestratorExceptionBase
 
-from .sqlite import JsonSqliteDict
+from scrapyd.sqlite import JsonSqliteDict
 from subprocess import Popen, PIPE
 import six
 from six import iteritems
 import socket
 import json
+import os
+import sys
+from subprocess import PIPE, Popen
+
+import six
+from scrapy.utils.misc import load_object
+from six import iteritems
 from twisted.web import resource
 from twisted.python import log
 
-from scrapyd.spiderqueue import SqliteSpiderQueue
 from scrapyd.config import Config
 from scrapy.utils.misc import load_object
 import requests
@@ -155,7 +161,7 @@ def get_spider_list(project, runner=None, pythonpath=None, version=''):
         raise RuntimeError(msg.encode('unicode_escape') if six.PY2 else msg)
     # FIXME: can we reliably decode as UTF-8?
     # scrapy list does `print(list)`
-    tmp = out.decode('utf-8').splitlines();
+    tmp = out.decode('utf-8').splitlines()
     try:
         project_cache = get_spider_list.cache[project]
         project_cache[version] = tmp

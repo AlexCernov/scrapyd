@@ -10,7 +10,7 @@ except ImportError:
 
 from twisted.python import log
 
-from .utils import get_spider_list, JsonResource, UtilsCache, native_stringify_dict
+from scrapyd.utils import get_spider_list, JsonResource, UtilsCache, native_stringify_dict
 from scrapyd.orchestrator_client.api_interfaces.ProjectApi import ProjectApi
 from scrapyd.orchestrator_client.api_interfaces.SpiderApi import SpiderApi
 from scrapyd.orchestrator_client.api_interfaces.JobApi import JobApi
@@ -40,8 +40,13 @@ class DaemonStatus(WsResource):
         running = len(self.root.launcher.processes)
         finished = len(self.root.launcher.finished)
 
-        return {"node_name": self.root.nodename, "status": "ok", "pending": pending, "running": running,
-                "finished": finished}
+        return {
+            "node_name": self.root.nodename,
+            "status": "ok",
+            "pending": pending,
+            "running": running,
+            "finished": finished,
+        }
 
 
 class Schedule(WsResource):
@@ -56,7 +61,7 @@ class Schedule(WsResource):
         version = args.get('_version', '')
         priority = float(args.pop('priority', 0))
         spiders = get_spider_list(project, version=version)
-        if not spider in spiders:
+        if spider not in spiders:
             return {"status": "error", "message": "spider '%s' not found" % spider}
         args['settings'] = settings
         jobid = args.pop('jobid', uuid.uuid1().hex)
@@ -80,6 +85,7 @@ class Schedule(WsResource):
         log.msg(f"Scheduled job with id {str(args['_job'])} for project {str(project)} running on spider {str(spider)}")
         self.root.scheduler.schedule(project, spider, priority=priority, **args)
         return {"node_name": self.root.nodename, "status": "ok", "jobid": args['_job']}
+
 
 
 class Cancel(WsResource):

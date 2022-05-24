@@ -3,6 +3,15 @@
 Release notes
 =============
 
+Unreleased
+----------
+
+Removed
+~~~~~~~
+
+- Unmaintained files (Debian packaging)
+- Unused code (``scrapyd/script.py``)
+
 1.3.0
 -----
 *Release date: 2022-01-12*
