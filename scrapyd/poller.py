@@ -2,7 +2,7 @@ from six import iteritems
 from twisted.internet.defer import DeferredQueue, inlineCallbacks, maybeDeferred, returnValue
 from scrapyd.utils import get_spider_queues
 from scrapyd.interfaces import IPoller
-
+from zope.interface import implementer
 
 @implementer(IPoller)
 class QueuePoller(object):

@@ -1,5 +1,4 @@
 from zope.interface import implementer
-
 from scrapyd.interfaces import ISpiderQueue
 from scrapyd.sqlite import JsonSqlitePriorityQueue
 
